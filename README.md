@@ -3,5 +3,5 @@
 "De vCalendar à h-event".
 
 Par : 
-Cazé Virginie, L2 à Cergy
+Cazé Virginie, L2 à Cergy et  
 Szathmary David, L2 à Cergy 
