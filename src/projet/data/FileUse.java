@@ -72,7 +72,7 @@ public class FileUse {
 			e.printStackTrace();
 		}
 	}
-	
+	//serialisation du fichier
 	public void file_ser(File f) {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("sauvegarde.ser"));
