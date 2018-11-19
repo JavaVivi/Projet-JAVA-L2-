@@ -10,7 +10,10 @@ import java.io.File;
  *
  */
 public interface Sauvegarde {
-	public void lecture_et_sauvegarde_fichier(File f);
-	public void serialisation();
-	//public void serialisation_lecture();
+	public static void lecture_et_sauvegarde_fichier(File f) throws WrongExtensionException {
+	}
+	public static void serialisation(File f) {
+	}
+	public static void serialisation_lecture(File f) {
+	}
 }
