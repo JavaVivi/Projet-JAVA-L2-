@@ -2,14 +2,14 @@
  * 
  */
 package projet.data;
+import java.io.File;
+import java.io.FilenameFilter;
+
 
 /**
  * @author vcaze
  *
  */
-
-import java.io.File;
-import java.io.FilenameFilter;
 
 //le filtre utilise l'interface FilenameFilter qui permet de filtrer des fichiers ( par 
 //leur extension ici )
