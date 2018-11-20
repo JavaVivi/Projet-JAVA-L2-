@@ -42,9 +42,7 @@ public class ListFiles {
 			}
 		}
 	}
-	//ce main est indispensable. Notre méthode est statique, et nécessite un main dans la 
-	//classe pour pouvoir être utilisée. Lorsque l'on va assigner un paramètre ( ex : -d )
-	//à cette classe, elle va appeler son main et l'exécuter
+	//tests à jeter
 	public static void main(String[] args) {
 		liste_files(new File("dir"));
 	}
