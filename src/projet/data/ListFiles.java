@@ -31,7 +31,7 @@ public class ListFiles {
 					if(list[i].isFile()) {
 						//on teste si le fichier correspond au filtre ( donc aux extensions
 						//voulues ) et on affiche le nom du fichier si c'est le cas. Sinon,
-						//on fais un appel récursif sur la case suivante
+						//on fais un appel récursif sur la case suivante ie le sous dossier
 						if(f.accept(list[i], list[i].getName())){
 							System.out.println(list[i].getName());
 						}
