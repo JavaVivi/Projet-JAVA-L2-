@@ -5,9 +5,13 @@ package projet.data;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * @author vcaze
@@ -66,7 +70,6 @@ public class SauvegardeVCF implements Sauvegarde {
 				    		line = br.readLine();
 				        }
 					 br.close();
-					 System.out.println(v);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -80,10 +83,58 @@ public class SauvegardeVCF implements Sauvegarde {
 		}
 	}
 	
+	/** Methode permettant de serialiser l'objet de type FichierVCF dans un fichier binaire. Le nom du fichier à produire est 
+	 * passé en paramètre par l'utilisateur.
+	 * @param f
+	 */
+	public static void serialisation(File f) {
+		try {
+			if(f.getName().endsWith(".ser")) {
+			f.createNewFile();
+			FileOutputStream fos = new FileOutputStream(f);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(v);
+			fos.close();
+			oos.close();
+		    } 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**Méthode de relecture du fichier binaire de sauvegarde.
+	 * @param f
+	 */
+	public static void serialisation_lecture(File f) {
+		try {
+			if(f.getName().endsWith(".ser")) {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			try {
+				System.out.println(ois.readObject());
+				ois.close();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			} 
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	//tests à jetés
 	public static void main(String[] args) {
 		File f = new File("/home/etu/vcaze/Bureau/Projet-JAVA-L2--master/Files/vCard David.vcf");
+		File f2 = new File("/home/etu/vcaze/Bureau/Projet-JAVA-L2--master/Files/vCard David.ser");
 		try {
 			lecture_et_sauvegarde_fichier(f);
+			serialisation(f2);
+			serialisation_lecture(f2);
+			
 		} catch (WrongExtensionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,4 +142,3 @@ public class SauvegardeVCF implements Sauvegarde {
 		
 	}
 }
-	
