@@ -11,23 +11,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * @author vcaze
+ * @author David Szathmary
  *
  */
 public class SauvegardeICS implements Sauvegarde {
 	
 	static FichierICS v = new FichierICS("", "", "", "", "","","","","");
 	/**
-	 * Cette méthode prends en paramètre le fichier entré par l'utilisateur. 
-	 * Si le fichier n'est pas de type .ics, le programme s'arrête et lève une
+	 * Cette mÃ©thode prends en paramÃ¨tre le fichier entrÃ© par l'utilisateur. 
+	 * Si le fichier n'est pas de type .ics, le programme s'arrÃªte et lÃ¨ve une
 	 * exception. Sinon, on ouvre les flux de lecture et on lit le fichier ligne
 	 * par ligne. A chaque ligne, on regarde par quoi elle commence et selon cette
-	 * information, on va découper la ligne après le prefixe...pour récupérer la
-	 * chaine de caractères qui suit. Cette chaine de caractères va ensuite être
-	 * assigné à l'attribut de notre objet de type FichierVCF. Ces instructions 
+	 * information, on va dÃ©couper la ligne aprÃ¨s le prefixe...pour rÃ©cupÃ©rer la
+	 * chaine de caractÃ¨res qui suit. Cette chaine de caractÃ¨res va ensuite Ãªtre
+	 * assignÃ© Ã  l'attribut de notre objet de type FichierICS. Ces instructions 
 	 * permettent donc d'afficher le contenu du fichier en sauvegardant ses 
-	 * informations dans un objet structuré, qui va être utilisé dans la 
-	 * sérialisation. 
+	 * informations dans un objet structurÃ©, qui va Ãªtre utilisÃ© dans la 
+	 * sÃ©rialisation. 
 	 * @param f
 	 * @throws WrongExtensionException
 	 */
@@ -96,8 +96,8 @@ public class SauvegardeICS implements Sauvegarde {
 		}
 	}
 	
-	/** Methode permettant de serialiser l'objet de type FichierICS dans un fichier binaire. Le nom du fichier à produire est 
-	 * passé en paramètre par l'utilisateur.
+	/** Methode permettant de serialiser l'objet de type FichierICS dans un fichier binaire. Le nom du fichier Ã  produire est 
+	 * passÃ© en paramÃ¨tre par l'utilisateur.
 	 * @param f
 	 */
 	public static void serialisation(File f) {
@@ -116,7 +116,7 @@ public class SauvegardeICS implements Sauvegarde {
 		}
 	}
 	
-	/**Méthode de relecture du fichier binaire de sauvegarde.
+	/**MÃ©thode de relecture du fichier binaire de sauvegarde.
 	 * @param f
 	 */
 	public static void serialisation_lecture(File f) {
@@ -139,7 +139,7 @@ public class SauvegardeICS implements Sauvegarde {
 			e.printStackTrace();
 		}
 	}
-	//tests à jetés
+	//tests Ã  jetÃ©s
 	public static void main(String[] args) {
 		File f = new File("/home/etu/vcaze/Bureau/Projet-JAVA-L2--master/Files/vCard David.vcf");
 		File f2 = new File("/home/etu/vcaze/Bureau/Projet-JAVA-L2--master/Files/vCard David.ser");
