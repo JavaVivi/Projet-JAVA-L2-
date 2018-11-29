@@ -126,6 +126,36 @@ public class SauvegardeVCF implements Sauvegarde {
 			e.printStackTrace();
 		}
 	}
+	
+	/**Génère le fichier html à partir de l'objet de type FichierVCF.
+	 * @param f
+	 */
+	public static void fragment_HTML(File f) {
+		if(f.getName().endsWith(".html")) {
+			try {
+				f.createNewFile();
+				FileWriter fw = new FileWriter(f);
+				BufferedWriter bw = new BufferedWriter(fw);
+				bw.write("<div class=\"vcard\">");
+				bw.newLine();
+				bw.write("<span class=\"fn\">" + v.getName() + "</span>");
+				bw.newLine();
+				bw.write("<a class=\"email\" href=\"" + v.getEmail() + ">e</a>");
+				bw.newLine();
+				bw.write("<span class=\"org\">" + v.getOrg() + "</span>");
+				bw.newLine();
+				bw.write("<span class=\"tel\">" + v.getTel() + "</span>");
+				bw.newLine();
+				bw.write("</div>");
+				bw.close();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	//tests à jetés
 	public static void main(String[] args) {
 		File f = new File("/home/etu/vcaze/Bureau/Projet-JAVA-L2--master/Files/vCard David.vcf");
