@@ -16,4 +16,6 @@ public interface Sauvegarde {
 	}
 	public static void serialisation_lecture(File f) {
 	}
+	public static void fragment_HTML(File f) {
+	}
 }
