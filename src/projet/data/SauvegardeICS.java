@@ -139,6 +139,41 @@ public class SauvegardeICS implements Sauvegarde {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void fragment_HTML(File f) {
+		if(f.getName().endsWith(".html")) {
+			try {
+				f.createNewFile();
+				FileWriter fw = new FileWriter(f);
+				BufferedWriter bw = new BufferedWriter(fw);
+				bw.write("<div class=\"icalendar\">");
+				bw.newLine();
+				bw.write("<a class=\"prodid\" href=\"" + v.getProdid() + ">e</a>");
+				bw.newLine();
+				bw.write("<a class=\"uid\" href=\"" + v.getUID() + ">e</a>");
+				bw.newLine();
+				bw.write("<span class=\"dtstamp\">" + v.getDtStamp() + "</span>");
+				bw.newLine();
+				bw.write("<span class=\"dtstart\">" + v.getDtStart() + "</span>");
+				bw.newLine();
+				bw.write("<span class=\"dtend\">" + v.getDtEnd() + "</span>");
+				bw.newLine();
+				bw.write("<span class=\"summary\">" + v.getSummary() + "</span>");
+				bw.newLine();
+				bw.write("<span class=\"location\">" + v.getLocation() + "</span>");
+				bw.newLine();
+				bw.write("<span class=\"desc\">" + v.getDesc() + "</span>");
+				bw.newLine();
+				bw.write("</div>");
+				bw.close();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	//tests à jetés
 	public static void main(String[] args) {
 		File f = new File("/home/etu/vcaze/Bureau/Projet-JAVA-L2--master/Files/vCard David.vcf");
