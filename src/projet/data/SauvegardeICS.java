@@ -41,7 +41,7 @@ public class SauvegardeICS implements Sauvegarde {
 					String line = br.readLine();
 					 while (line != null)
 				        {
-						 	System.out.println (line);
+						 	//System.out.println (line); Inutile, à virer.
 				    		
 				    		if(line.startsWith("VERSION:")) {
 				    			String version = line.substring(8);
