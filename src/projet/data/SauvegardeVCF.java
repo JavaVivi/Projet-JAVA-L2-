@@ -46,7 +46,7 @@ public class SauvegardeVCF implements Sauvegarde {
 					String line = br.readLine();
 					 while (line != null)
 				        {
-						 	System.out.println (line);
+						 	//System.out.println (line); à virer aussi
 				    		
 				    		if(line.startsWith("VERSION:")) {
 				    			String version = line.substring(8);
