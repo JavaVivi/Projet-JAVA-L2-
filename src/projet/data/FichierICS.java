@@ -164,6 +164,65 @@ public class FichierICS implements Serializable {
 		this.desc = desc;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FichierICS other = (FichierICS) obj;
+		if (UID == null) {
+			if (other.UID != null)
+				return false;
+		} else if (!UID.equals(other.UID))
+			return false;
+		if (desc == null) {
+			if (other.desc != null)
+				return false;
+		} else if (!desc.equals(other.desc))
+			return false;
+		if (dtEnd == null) {
+			if (other.dtEnd != null)
+				return false;
+		} else if (!dtEnd.equals(other.dtEnd))
+			return false;
+		if (dtStamp == null) {
+			if (other.dtStamp != null)
+				return false;
+		} else if (!dtStamp.equals(other.dtStamp))
+			return false;
+		if (dtStart == null) {
+			if (other.dtStart != null)
+				return false;
+		} else if (!dtStart.equals(other.dtStart))
+			return false;
+		if (loc == null) {
+			if (other.loc != null)
+				return false;
+		} else if (!loc.equals(other.loc))
+			return false;
+		if (prodid == null) {
+			if (other.prodid != null)
+				return false;
+		} else if (!prodid.equals(other.prodid))
+			return false;
+		if (summ == null) {
+			if (other.summ != null)
+				return false;
+		} else if (!summ.equals(other.summ))
+			return false;
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
+		return true;
+	}
 
 
 	/* (non-Javadoc)
