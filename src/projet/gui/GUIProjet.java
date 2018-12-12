@@ -1,6 +1,3 @@
-/**
- * 
- */
 package projet.gui;
 
 import projet.data.*;
@@ -10,9 +7,17 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -42,7 +47,10 @@ public class GUIProjet extends JFrame {
 	//private JButton ouvrir, sauvegarder, generer, aide;
 	private JFileChooser jfc;
 	
-	public GUIProjet() {
+	/**
+	 *  Constructeur permettant de créer l'interface graphique.
+	 */
+	public GUIProjet() { 
 		
 		JLabel jf = new JLabel("Fichiers : ");
 		fichiers = new JTextArea(15,15);
@@ -52,24 +60,33 @@ public class GUIProjet extends JFrame {
 		
 		JLabel jc = new JLabel("Contenu : ");
 		contenu = new JTextArea(20,25);
+		/**
+		 * La zone contenu n'est pas éditable, il s'agit juste d'une zone informative.
+		 */
 		contenu.setEditable(true);
 		
 		menu = new JMenu("Fichier");
 		menu.setMnemonic(KeyEvent.VK_A);
 		menuBar.add(menu);
 		
+		/**
+		 * 
+		 */
 		menuItemO = new JMenuItem("Ouvrir");
-		//menuItemO.addActionListener(new ActionOuvrir());
+		menuItemO.addActionListener(new ActionOuvrir());
 		menu.add(menuItemO);
 		menu.addSeparator();
 		
+		/**
+		 * "Récupérer chemins" permet d'ouvrir un dossier pour afficher la liste des fichiers .vcf et .ics s'y trouvant.
+		 */
 		menuItemD = new JMenuItem("Récuperer chemins");
 		menuItemD.addActionListener(new ActionChemins());
 		menu.add(menuItemD);
 		menu.addSeparator();
 		
 		menuItemS = new JMenuItem("Sauvegarder");
-		//menuItemS.addActionListener(new ActionEnregistrer());
+		menuItemS.addActionListener(new ActionEnregistrer());
 		menu.add(menuItemS);
 		menu.addSeparator();
 		
@@ -97,24 +114,89 @@ public class GUIProjet extends JFrame {
 	
 	}
 	
+	/** On ouvre un fichier. Si le fichier est de la bonne extension, on ouvre les flux de lecture et on affiche chaque 
+	 * ligne du fichier dans la zone éditable "contenu", grâce au BufferedReader.
+	 * A noter que la zone se réinitialise à chaque ouverture de fichier pour éviter l'affichage de plusieurs fichiers à
+	 * la suite.
+	 * @author vcaze
+	 * @version 1.0
+	 */
+	class ActionOuvrir implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			jfc = new JFileChooser();
+			int returnVal = jfc.showOpenDialog(menuItemO);
+			if(returnVal == JFileChooser.APPROVE_OPTION) {
+				contenu.setText("");
+				int r = JOptionPane.showConfirmDialog(null, "Voulez vous ouvrir ce fichier ?", "Info", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(r == JOptionPane.YES_OPTION) {
+					File file = jfc.getSelectedFile();
+					if(file.getName().endsWith(".vcf") || file.getName().endsWith(".ics")) {
+						BufferedReader br;
+						try {
+							br = new BufferedReader(new FileReader(file));
+							String line = br.readLine();
+							while(line != null) {
+								contenu.setText(contenu.getText() + line + "\n");
+								line = br.readLine();
+							}
+							
+							br.close();
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+					else if(file.getName().endsWith(".ser")) {
+						try {
+							ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+							contenu.setText(String.valueOf(ois.readObject()));
+							ois.close();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				}
+				
+			}
+			
+		}	
+	}
 	
+	
+	/** On ouvre un JFileChooser en mode "dossier seulement" et on liste son contenu dans un tableau. Si le tableau n'est pas
+	 * vide, on affiche dans la zone de texte fichiers le chemin du dossier choisi puis on parcourt le tableau. Si
+	 * la case i du tableau correspond à un fichier, on récupère son nom. Puis on vérifie que le fichier est de type .cf ou
+	 * .ics. Si toutes les conditions sont réunies, on peut afficher le nom du fichier dans la zone fichiers. 
+	 * @author vcaze
+	 * @version 1.0
+	 */
 	class ActionChemins implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			jfc = new JFileChooser();
 			jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			int returnVal = jfc.showOpenDialog(menuItemO);
+			int returnVal = jfc.showOpenDialog(menuItemD);
 			if(returnVal == JFileChooser.APPROVE_OPTION) {
 					File dir = jfc.getSelectedFile();
+					String dirPath = dir.getPath();
 					File[] list = dir.listFiles();
 					if(list != null) {
+						fichiers.append("Dossier choisi : " + dirPath + "\n");
 						for(int i=0; i<list.length; i++) {
-							String path = list[i].getAbsolutePath();
+							String path = list[i].getName();
 							if(list[i].isFile()) {
 								if(list[i].getName().endsWith(".vcf") || list[i].getName().endsWith(".ics")) {
-									//String path = list[i].getAbsolutePath();
-									fichiers.append(path + "\n");
+									fichiers.append("   " + path + "\n");
 									
 								}  
 							}
@@ -124,9 +206,63 @@ public class GUIProjet extends JFrame {
 		 }
 	}
 	
+	/** On ouvre un JFileChooser de sauvegarde. Si l'utilisateur entre son nom de fichier à sauvegarder en .vcf ou .ics, on
+	 * récupère le contenu de "contenu" et on le sauvegarde dans ce fichier ( cela écrase aussi le contenu d'un fichier dejà
+	 * existant ). Si le nom est en .ser, on fais la même récupération...mais sur un fichier binaire de sauvegarde.
+	 * @author vcaze
+	 * @version 1.0
+	 */
+	class ActionEnregistrer implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			jfc = new JFileChooser();
+			int returnVal = jfc.showSaveDialog(menuItemS);
+			if(returnVal == JFileChooser.APPROVE_OPTION) {
+				int r = JOptionPane.showConfirmDialog(null, "Voulez vous enregistrer ce fichier ?", "Info", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(r == JOptionPane.YES_OPTION) {
+					File file = jfc.getSelectedFile();
+					if(file.getName().endsWith(".vcf") || file.getName().endsWith(".ics")) {
+						BufferedWriter bw;
+						try {
+							bw = new BufferedWriter(new FileWriter(file));
+							bw.write(contenu.getText());
+							bw.close();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} else if(file.getName().endsWith(".ser")) {
+						FileOutputStream fos;
+						try {
+							fos = new FileOutputStream(file);
+							ObjectOutputStream oos = new ObjectOutputStream(fos);
+							oos.writeObject(contenu.getText());
+							oos.close();
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					
+						
+					}
+				}
+			}
+		}
+	}
+		
+	
+	
 	
 		
 	
+	/** Ouvre un dialogue de fermeture. 
+	 * @author vcaze
+	 * @version 1.0
+	 */
 	class ActionQuitter implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
