@@ -1,6 +1,3 @@
-/**
- * 
- */
 package projet.data;
 
 import java.io.BufferedReader;
@@ -17,6 +14,7 @@ import java.io.ObjectOutputStream;
 
 /**
  * @author vcaze
+ * @version 1.0
  *
  */
 public class SauvegardeVCF implements Sauvegarde {
@@ -46,8 +44,7 @@ public class SauvegardeVCF implements Sauvegarde {
 					String line = br.readLine();
 					 while (line != null)
 				        {
-						 	//System.out.println (line); à virer aussi
-				    		
+						
 				    		if(line.startsWith("VERSION:")) {
 				    			String version = line.substring(8);
 				    			v.setVersion(version);
@@ -88,6 +85,7 @@ public class SauvegardeVCF implements Sauvegarde {
 	/** Methode permettant de serialiser l'objet de type FichierVCF dans un fichier binaire. Le nom du fichier à produire est 
 	 * passé en paramètre par l'utilisateur.
 	 * @param f
+	 * @see #serialisation_lecture(File)
 	 */
 	public static void serialisation(File f) {
 		try {
@@ -107,6 +105,7 @@ public class SauvegardeVCF implements Sauvegarde {
 	
 	/**Méthode de relecture du fichier binaire de sauvegarde.
 	 * @param f
+	 * @see #serialisation(File)
 	 */
 	public static void serialisation_lecture(File f) {
 		try {
@@ -129,6 +128,7 @@ public class SauvegardeVCF implements Sauvegarde {
 		}
 	}
 	
+
 	/**Génère le fichier html à partir de l'objet de type FichierVCF.
 	 * @param f
 	 */
@@ -156,21 +156,15 @@ public class SauvegardeVCF implements Sauvegarde {
 				e.printStackTrace();
 			}
 		}
-	}
+   }
 	
-	//tests à jetés
-	public static void main(String[] args) {
-		File f = new File("/home/etu/vcaze/Bureau/Projet-JAVA-L2--master/Files/vCard David.vcf");
-		File f2 = new File("/home/etu/vcaze/Bureau/Projet-JAVA-L2--master/Files/vCard David.ser");
-		try {
-			lecture_et_sauvegarde_fichier(f);
-			serialisation(f2);
-			serialisation_lecture(f2);
-			
-		} catch (WrongExtensionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+	/** Affiche l'objet v ( crée à partir d'un fichier ).
+	 * @return
+	 */
+	public static String afficherFile () {
+        return v.toString();
+    }
+
+
 }
+	
