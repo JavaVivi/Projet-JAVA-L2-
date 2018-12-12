@@ -1,18 +1,15 @@
-/**
- * 
- */
+package projet.data;
 
-
-package data;
 
 import java.io.Serializable;
 
 
 /**
- * 
- * @author David Szathmary
- *
- */
+* 
+* @author David Szathmary
+* @version 1.0
+*
+*/
 public class FichierICS implements Serializable {
 
 	private static final long serialVersionUID = -1572975497357412359L;
