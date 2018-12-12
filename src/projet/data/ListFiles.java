@@ -1,6 +1,3 @@
-/**
- * 
- */
 package projet.data;
 
 import java.io.File;
@@ -8,11 +5,13 @@ import java.io.File;
 
 /**
  * @author vcaze
+ * @version 1.0
  *
  */
 public class ListFiles {
 	
-	/**
+	/** Liste les fichiers d'un dossier en récupérant uniquement les .ics et .vcf à l'aide de la classe Filtre. Permet un appel
+	 * récursif sur les sous-dossiers.
 	 * @param dir
 	 */
 	public static void liste_files(File dir) {
@@ -31,7 +30,7 @@ public class ListFiles {
 					if(list[i].isFile()) {
 						//on teste si le fichier correspond au filtre ( donc aux extensions
 						//voulues ) et on affiche le nom du fichier si c'est le cas. Sinon,
-						//on fais un appel récursif sur la case suivante ie le sous dossier
+						//on fais un appel récursif sur la case suivante
 						if(f.accept(list[i], list[i].getName())){
 							System.out.println(list[i].getName());
 						}
@@ -42,8 +41,5 @@ public class ListFiles {
 			}
 		}
 	}
-	//tests à jeter
-	public static void main(String[] args) {
-		liste_files(new File("dir"));
-	}
-  }
+
+}
