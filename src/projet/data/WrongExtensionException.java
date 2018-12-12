@@ -1,8 +1,8 @@
 package projet.data;
 
 /**
- * @author vcaze
- *
+ * @author vcaze	
+ * @version 1.0
  */
 public class WrongExtensionException extends Exception {
 
