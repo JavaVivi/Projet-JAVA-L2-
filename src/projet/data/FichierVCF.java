@@ -1,13 +1,10 @@
-/**
- * 
- */
 package projet.data;
 
 import java.io.Serializable;
 
 /**
  * @author vcaze
- *
+ * @version 1.0
  */
 public class FichierVCF implements Serializable {
 	
