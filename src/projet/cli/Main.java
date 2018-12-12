@@ -1,14 +1,25 @@
+package projet.cli;
 import java.io.File;
 
-import data.SauvegardeICS;
-import data.SauvegardeVCF;
-import data.WrongExtensionException;
+import projet.data.*; 
 
+/**
+ * @author David Szathmary
+ * @version 1.0
+ *
+ */
 public class Main {
 
+	/** Le main correspond au mode console, où les paramètres sont gerés.
+	 * @param args
+	 */
+	
 	public static void main (String[] args) {
 		
-		if (args.length == 0) {			//affichage des options
+		/**
+		 * Si l'utilisateur ne rentre pas d'arguments, le programme affiche la liste des options possibles.
+		 */
+		if (args.length == 0) {			
 			System.out.println("-d nomFichier : liste les fichier d'un dossier\n");
 			System.out.println("-i nomFichier : affiche le fichier \n");
 			System.out.println("-i nomFichierIn -o nomFichierOut : sauvegarde le fichier dans un .ser");
@@ -16,9 +27,17 @@ public class Main {
 		}
 		
 		if (args.length >= 1) {
-			if (args[0].equals("-d")) {			//liste les fichiers du dossier sp�cifi�
+			/**
+			 * L'argument -d liste les fichiers du dossier spécifié, en appelant la méthode static liste_files de la classe
+			 * ListFiles. 
+			 */
+			if (args[0].equals("-d")) {			
 				ListFiles.liste_files((new File (args[1])));
 			}
+			/**
+			 * L'argument -i affiche le fichier spécifié, en appelant la méthode de lecture de la classe correspondante au
+			 * type de fichier. Le fichier spécifié sera toujours le fichier passé en entrée.
+			 */
 			if (args[0].equals("-i")) {			//definit le fichier en entr�e (si seul, affiche simplement le fichier)
 				String iFileName = args[1];
 				try {
@@ -32,17 +51,24 @@ public class Main {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}	
+				/**
+				 * Affiche le fichier.
+				 */
 				if (args.length == 2) {
-					if (iFileName.endsWith(".vcf")) {		//affichage du fichier
+					if (iFileName.endsWith(".vcf")) {		
 						System.out.println(SauvegardeVCF.afficherFile());
 					}
 					if (iFileName.endsWith(".ics")) {
 						System.out.println(SauvegardeICS.afficherFile());
 					}
 				}
+				/**
+				 * L'argument -o permet de spécifier le fichier de sortie pour sérialiser notre fichier d'entrée dans un .ser
+				 * dont le chemin est spécifié par l'utilisateur.
+				 */
 			
 				if (args.length >=3) {
-					if(args[2].equals("-o")) {		//sauvegarde le fichier en entr�e dans un .ser
+					if(args[2].equals("-o")) {		
 						String oFileNameSER = args[3];
 						if (iFileName.endsWith(".vcf")) {
 							SauvegardeVCF.serialisation(new File(oFileNameSER));
@@ -51,7 +77,10 @@ public class Main {
 							SauvegardeICS.serialisation(new File(oFileNameSER));
 						}
 						}
-					if(args[2].equals("-h")) {		//genere un .html a partir du fichier en entr�e
+					/**
+					 * L'argument -h permet de générer un fichier .html à partir du fichier passé en entrée. 
+					 */
+					if(args[2].equals("-h")) {		
 						String oFileNameHTML = args[3];
 						if (iFileName.endsWith(".vcf")) {
 							SauvegardeVCF.fragment_HTML(new File (oFileNameHTML));
