@@ -1,8 +1,7 @@
 package projet.gui;
 
-import projet.data.*;
 
-import java.awt.BorderLayout;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +18,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import javax.swing.JButton;
+
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -254,7 +253,56 @@ public class GUIProjet extends JFrame {
 		}
 	}
 		
-	
+	/** On ouvre un JFileChooser de sauvegarde, on crée un tableau de String pour les lignes de "contenu" si l'utilisateur
+	 * entre un nom de fichier en .html. On coupe chaque ligne par le ":", et on écris les lignes du .html suivant
+	 * les conventions de balisages. 
+	 * @author vcaze
+	 * @version 1.0
+	 */
+	class ActionGenerer implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			jfc = new JFileChooser();
+			int returnVal = jfc.showSaveDialog(menuItemH);
+			if(returnVal == JFileChooser.APPROVE_OPTION) {
+				int r = JOptionPane.showConfirmDialog(null, "Voulez vous générer le fichier HTML ?", "Info", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(r == JOptionPane.YES_OPTION) {
+					File file = jfc.getSelectedFile();
+					if(file.getName().endsWith(".html")){
+						FileWriter fw;
+						try {
+							fw = new FileWriter(file);
+							BufferedWriter bw = new BufferedWriter(fw);
+							String[] lines = contenu.getText().split("\n");
+							int i = 0;
+							String[] line = lines[i].split(":");
+							while(i < lines.length) {
+								if(lines[i].startsWith("BEGIN")) {
+									bw.write("<div class=\"" + line[1] + "\">");
+									bw.newLine();
+									i++;
+								}
+								//Le programme ne va jamais à la ligne suivante, ce qui génère un .html correct
+								//syntaxiquement mais incorrecte fonctionnellement.
+								bw.write("<span class=\"" + line[0] + "\">" + line[1] + "</span>");
+								bw.newLine();
+								i++;
+							}
+							bw.write("</div>");
+							bw.close();
+							
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						
+				    }
+			     }
+		     }
+		 }
+	}
 	
 	
 		
