@@ -1,6 +1,5 @@
+
 package projet.gui;
-
-
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -17,7 +16,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -43,6 +41,7 @@ public class GUIProjet extends JFrame {
 	private JMenu menu;
 	private JMenuItem menuItemO, menuItemD, menuItemS, menuItemH, menuItemQ;
 	private JTextArea fichiers, contenu;
+	//private JButton ouvrir, sauvegarder, generer, aide;
 	private JFileChooser jfc;
 	
 	/**
@@ -96,7 +95,7 @@ public class GUIProjet extends JFrame {
 		menuItemQ = new JMenuItem("Quitter");
 		menuItemQ.addActionListener(new ActionQuitter());
 		menu.add(menuItemQ);
-		menu.addSeparator();
+		
 		
 		this.setTitle("Carte de visite & calendrier");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -207,7 +206,7 @@ public class GUIProjet extends JFrame {
 	/** On ouvre un JFileChooser de sauvegarde. Si l'utilisateur entre son nom de fichier à sauvegarder en .vcf ou .ics, on
 	 * récupère le contenu de "contenu" et on le sauvegarde dans ce fichier ( cela écrase aussi le contenu d'un fichier dejà
 	 * existant ). Si le nom est en .ser, on fais la même récupération...mais sur un fichier binaire de sauvegarde.
-	 * @author vcaze
+	 * @author vcazeclass ActionGenerer
 	 * @version 1.0
 	 */
 	class ActionEnregistrer implements ActionListener {
@@ -252,6 +251,8 @@ public class GUIProjet extends JFrame {
 		}
 	}
 		
+	
+	
 	/** On ouvre un JFileChooser de sauvegarde, on crée un tableau de String pour les lignes de "contenu" si l'utilisateur
 	 * entre un nom de fichier en .html. On coupe chaque ligne par le ":", et on écris les lignes du .html suivant
 	 * les conventions de balisages. 
@@ -275,22 +276,19 @@ public class GUIProjet extends JFrame {
 							BufferedWriter bw = new BufferedWriter(fw);
 							String[] lines = contenu.getText().split("\n");
 							int i = 0;
-							String[] line = lines[i].split(":");
 							while(i < lines.length) {
+								String[] line = lines[i].split(":");
 								if(lines[i].startsWith("BEGIN")) {
 									bw.write("<div class=\"" + line[1] + "\">");
 									bw.newLine();
 									i++;
 								}
-								//Le programme ne va jamais à la ligne suivante, ce qui génère un .html correct
-								//syntaxiquement mais incorrecte fonctionnellement.
 								bw.write("<span class=\"" + line[0] + "\">" + line[1] + "</span>");
 								bw.newLine();
 								i++;
-							}
+							}	
 							bw.write("</div>");
 							bw.close();
-							
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -300,9 +298,11 @@ public class GUIProjet extends JFrame {
 				    }
 			     }
 		     }
-		 }
+		 
+		}
 	}
 	
+		
 	
 		
 	
@@ -316,7 +316,7 @@ public class GUIProjet extends JFrame {
 			// TODO Auto-generated method stub
 			int r = JOptionPane.showConfirmDialog(null, "Voulez vous quitter ?", "Info", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if(r == JOptionPane.YES_OPTION) {
-			System.exit(0);
+				System.exit(0);
 			}	
 		}
 	}
@@ -329,4 +329,5 @@ public class GUIProjet extends JFrame {
 	
 	
 
-}
+	}
+
