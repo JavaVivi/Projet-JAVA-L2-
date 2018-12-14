@@ -89,7 +89,7 @@ public class GUIProjet extends JFrame {
 		menu.addSeparator();
 		
 		menuItemH = new JMenuItem("Generer HTML");
-		//menuItemH.addActionListener(new ActionGenerer());
+		menuItemH.addActionListener(new ActionGenerer());
 		menu.add(menuItemH);
 		menu.addSeparator();
 		
