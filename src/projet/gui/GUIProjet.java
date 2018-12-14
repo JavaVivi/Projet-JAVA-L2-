@@ -43,7 +43,6 @@ public class GUIProjet extends JFrame {
 	private JMenu menu;
 	private JMenuItem menuItemO, menuItemD, menuItemS, menuItemH, menuItemQ;
 	private JTextArea fichiers, contenu;
-	//private JButton ouvrir, sauvegarder, generer, aide;
 	private JFileChooser jfc;
 	
 	/**
