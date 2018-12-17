@@ -24,6 +24,7 @@ public class Main {
 			System.out.println("-i nomFichier : affiche le fichier \n");
 			System.out.println("-i nomFichierIn -o nomFichierOut : sauvegarde le fichier dans un .ser");
 			System.out.println("-i nomFichierIn -h nomFichierOut : genere un fragment html");
+			System.out.println("-gui : lance en mode interface graphique");
 		}
 		
 		if (args.length >= 1) {
@@ -90,6 +91,9 @@ public class Main {
 						}
 					}	
 				}
+			}
+			if (args[0].equals("-gui")) {
+				new GUIProjet();
 			}
 		}
 	}
